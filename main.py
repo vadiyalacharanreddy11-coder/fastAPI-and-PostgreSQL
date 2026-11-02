@@ -11,7 +11,9 @@ DATABASE_URL=os.getenv("DATABASE_URL")
 engine=create_engine(DATABASE_URL)
 
 Base=declarative_base()
-
+ 
+app=FastAPI()
+from fastapi import HTTPException,FastAPI,Path,Query,Depends
 LocalSession=sessionmaker(bind=engine)
 from fastapi.middleware.cors import CORSMiddleware
 app.add_middleware(
@@ -89,8 +91,7 @@ def get_db():
         db.close()
 
 # Creating a fastAPI app  
-from fastapi import HTTPException,FastAPI,Path,Query,Depends
-app=FastAPI()
+
 
 # GET one student (ENDPOINT)
 @app.get("/student/{student_id}",response_model=StudentOutput)
