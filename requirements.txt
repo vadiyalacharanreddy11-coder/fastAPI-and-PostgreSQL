@@ -2,3 +2,6 @@ uvicorn
 fastapi
 SQLAlchemy
 psycopg2-binary
+streamlit
+requests
+pandas
