@@ -12,8 +12,9 @@ engine=create_engine(DATABASE_URL)
 
 Base=declarative_base()
  
-app=FastAPI()
+
 from fastapi import HTTPException,FastAPI,Path,Query,Depends
+app=FastAPI()
 LocalSession=sessionmaker(bind=engine)
 from fastapi.middleware.cors import CORSMiddleware
 app.add_middleware(
