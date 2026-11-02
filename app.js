@@ -15,7 +15,7 @@ const SORT_FIELDS = ['marks', 'age', 'name'];
 const EDITABLE_FIELDS = ['name', 'age', 'email', 'course', 'marks'];
 const STORAGE_KEY = 'registrar:settings:v1';
 const DEFAULTS = Object.freeze({ baseUrl: 'https://fastapi-and-postgres.onrender.com', demo: false, limit: 10 });
-const REQUEST_TIMEOUT = 10000;
+const REQUEST_TIMEOUT = 60000; // Render free instances can take ~30-60s to wake up
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 /* ---------- Icons ---------- */
@@ -350,7 +350,7 @@ const http = {
       });
     } catch (err) {
       throw new ApiError(0, err.name === 'AbortError'
-        ? 'The request timed out.'
+        ? 'The server is taking too long (it may be waking up). Try again in a few seconds.'
         : 'Could not reach the API. Make sure the server is running and CORS is enabled.');
     } finally {
       clearTimeout(timer);
@@ -412,7 +412,7 @@ const demo = (() => {
 
   return {
     reset,
-    async list({ course, sort_by, order = 'asc', page = 1, limit = 2 } = {}) {
+    async list({ course, sort_by, order = 'asc', page = 1, limit = 10 } = {}) {
       await wait();
       page = Number(page);
       limit = Number(limit);
@@ -423,14 +423,15 @@ const demo = (() => {
         throw new ApiError(400, `Invalid order '${order}', Choose from ["asc", "desc"]`);
       }
       let rows = [...db.values()];
-      if (course) rows = rows.filter((s) => s.course.toLowerCase() === String(course).toLowerCase());
+      if (course) rows = rows.filter((s) => s.course.toLowerCase() === String(course).trim().toLowerCase());
       const total = rows.length;
       const dir = order === 'desc' ? -1 : 1;
       if (sort_by) {
         rows.sort((a, b) => {
           const x = a[sort_by];
           const y = b[sort_by];
-          return (typeof x === 'number' ? x - y : String(x).localeCompare(String(y))) * dir;
+          const cmp = typeof x === 'number' ? x - y : String(x).localeCompare(String(y));
+          return cmp * dir || a.id.localeCompare(b.id);
         });
       } else {
         rows.sort((a, b) => a.id.localeCompare(b.id));
@@ -464,7 +465,7 @@ const demo = (() => {
     async update(id, changes) {
       await wait();
       const s = db.get(id);
-      if (!s) throw new ApiError(404, `Student with the Id '${id}' does not exists..`);
+      if (!s) throw new ApiError(404, `Student with the Id '${id}' not found`);
       const errors = validateStudent(changes, { partial: true });
       if (Object.keys(errors).length) fail422(errors);
       if (changes.email !== undefined && emailTaken(changes.email, id)) {

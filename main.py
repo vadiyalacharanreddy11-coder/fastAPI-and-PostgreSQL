@@ -191,3 +191,4 @@ def get_all(
             
     
 
+print(engine.url.render_as_string(hide_password=True))
