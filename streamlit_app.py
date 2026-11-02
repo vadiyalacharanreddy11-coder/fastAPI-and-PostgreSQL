@@ -10,7 +10,7 @@ import streamlit as st
 
 st.set_page_config(page_title="Student Registry", page_icon="📘", layout="wide")
 
-API_DEFAULT = "http://127.0.0.1:8000"
+API_DEFAULT = "https://student-management-api-tr9q.onrender.com"
 PAGE_SIZE = 10
 
 
