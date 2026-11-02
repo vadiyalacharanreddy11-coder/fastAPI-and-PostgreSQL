@@ -1,7 +1,10 @@
-uvicorn
-fastapi
-SQLAlchemy
-psycopg2-binary
 streamlit
-requests
 pandas
+requests
+altair
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary
+python-dotenv
+pydantic[email]
