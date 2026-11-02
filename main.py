@@ -13,8 +13,13 @@ engine=create_engine(DATABASE_URL)
 Base=declarative_base()
 
 LocalSession=sessionmaker(bind=engine)
-
-
+from fastapi.middleware.cors import CORSMiddleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins = ["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 class Student(Base):
     __tablename__="student"
     id=Column(String,primary_key=True)
