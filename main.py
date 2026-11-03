@@ -19,7 +19,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
 DATABASE_URL=os.getenv("DATABASE_URL")
 
-engine=create_engine(DATABASE_URL)
+engine=create_engine(DATABASE_URL, pool_pre_ping=True)
 
 # Creating a localsession from endpoint goes to DB and returns 
 LocalSession=sessionmaker(bind=engine)
