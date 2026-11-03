@@ -9,7 +9,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer
 from jose import jwt, JWTError
 from pydantic import BaseModel, field_validator, Field, EmailStr, computed_field, ConfigDict
-from sqlalchemy import create_engine, Column, String, Integer, func, ForeignKey
+from sqlalchemy import (
+    create_engine, Column, String, Integer,
+    func, ForeignKey, UniqueConstraint
+)
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import declarative_base, sessionmaker, Session
 
@@ -56,22 +59,29 @@ class Entries(Base):
     emailId = Column(String, primary_key=True, nullable=False)
     password = Column(String, nullable=False)
 
-
 class Student(Base):
-    """
-    Student IDs are unique PER TEACHER (composite primary key),
-    so two teachers can both have "S101".
-    The student's email stays unique across the whole table.
-    """
     __tablename__ = "student"
+
+    __table_args__ = (
+        UniqueConstraint(
+            "email",
+            "user_email",
+            name="uq_student_email_per_user"
+        ),
+    )
+
     id = Column(String, primary_key=True)
-    user_email = Column(String, ForeignKey("entries.emailId"), primary_key=True)
+    user_email = Column(
+        String,
+        ForeignKey("entries.emailId"),
+        primary_key=True
+    )
+
     name = Column(String(50), nullable=False)
     age = Column(Integer, nullable=False)
     course = Column(String, nullable=False)
     marks = Column(Integer, nullable=False)
-    email = Column(String, unique=True, nullable=False)
-
+    email = Column(String, nullable=False)
 
 Base.metadata.create_all(bind=engine)
 
