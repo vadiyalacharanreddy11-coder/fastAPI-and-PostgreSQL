@@ -1,4 +1,4 @@
- 
+﻿ 
 #  """
 # Student Registry - Streamlit frontend for the FastAPI student-management backend.
 
@@ -29,7 +29,7 @@ import streamlit as st
 # ─────────────────────────────────────────────────────────────────────────────
 st.set_page_config(page_title="Student Registry", page_icon="🎓", layout="wide")
 
-API_DEFAULT = "https://student-management-api-tr9q.onrender.com"
+API_DEFAULT = "http://127.0.0.1:8000"
  
 PAGE_SIZE = 10
 
@@ -290,6 +290,182 @@ hr {border-color: var(--line); margin: 1.6rem 0;}
 </style>
 """
 st.markdown(CSS, unsafe_allow_html=True)
+
+DARK_THEME = """
+<style>
+:root {
+    color-scheme: dark;
+    --ink: #edf2fb;
+    --muted: #91a0b5;
+    --paper: #090c13;
+    --card: #111722;
+    --blue: #a78bfa;
+    --blue-dark: #8b5cf6;
+    --sky: #a78bfa;
+    --chalk: #67e8f9;
+    --line: #252e3d;
+}
+html, body, .stApp, [data-testid="stAppViewContainer"] {
+    background: #090c13;
+    color: var(--ink);
+    font-family: 'Figtree', system-ui, sans-serif;
+}
+[data-testid="stHeader"] {background: rgba(9,12,19,.88);}
+[data-testid="stToolbar"], footer, #MainMenu {visibility: hidden;}
+h1, h2, h3, h4, .display {color: #f2f5fc;}
+.stMarkdown p, label, [data-testid="stCaptionContainer"] p {color: var(--muted);}
+label p {color: #d3d9e5 !important;}
+.block-container {max-width: 1440px; padding-top: 2rem;}
+[data-testid="stSidebar"] {
+    background: #0c111a;
+    border-right: 1px solid #222b3a;
+}
+[data-baseweb="input"] > div, [data-baseweb="select"] > div,
+[data-baseweb="textarea"] > div, [data-testid="stNumberInput"] input {
+    background: #0b1019 !important;
+    border: 1px solid #2a3546 !important;
+    border-radius: 10px !important;
+    color: #edf2fb !important;
+}
+[data-baseweb="input"] input, [data-baseweb="textarea"] textarea {
+    color: #edf2fb !important;
+    background: transparent !important;
+}
+[data-baseweb="input"] input::placeholder, [data-baseweb="textarea"] textarea::placeholder {
+    color: #718097 !important;
+}
+[data-baseweb="input"] > div:focus-within, [data-baseweb="select"] > div:focus-within,
+[data-baseweb="textarea"] > div:focus-within {
+    border-color: #9b7bf7 !important;
+    box-shadow: 0 0 0 3px rgba(155,123,247,.16) !important;
+}
+[role="listbox"], [data-baseweb="popover"] {background: #151c29 !important; color: #edf2fb !important;}
+[role="option"]:hover {background: #252c3b !important;}
+.stButton > button, .stFormSubmitButton > button, .stDownloadButton > button {
+    min-height: 2.7rem;
+    border-radius: 10px;
+    border: 1px solid #2b3546;
+    background: #151c28;
+    color: #e8edf7;
+    font-weight: 700;
+    transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+.stButton > button:hover, .stFormSubmitButton > button:hover,
+.stDownloadButton > button:hover {
+    transform: translateY(-1px);
+    border-color: #a78bfa;
+    color: #fff;
+}
+.stButton > button[kind="primary"], .stFormSubmitButton > button[kind="primary"] {
+    background: linear-gradient(115deg, #7c3aed, #9b7bf7);
+    border: 0;
+    color: #fff;
+    box-shadow: 0 8px 22px rgba(124,58,237,.25);
+}
+.stButton > button[kind="primary"]:hover, .stFormSubmitButton > button[kind="primary"]:hover {
+    background: linear-gradient(115deg, #8b5cf6, #a78bfa);
+    color: #fff;
+}
+.stTabs [data-baseweb="tab-list"] {
+    gap: .45rem;
+    background: transparent;
+    border-bottom: 1px solid #252e3d;
+}
+.stTabs [data-baseweb="tab"] {color: #91a0b5; font-weight: 700;}
+.stTabs [aria-selected="true"] {color: #c4b5fd !important;}
+.stTabs [data-baseweb="tab-highlight"] {background: #a78bfa;}
+.stTabs [data-baseweb="tab-border"] {background: transparent;}
+.stTabs [data-baseweb="tab-panel"] {padding-top: 1.4rem;}
+[data-testid="stVerticalBlockBorderWrapper"] {
+    background: linear-gradient(145deg, #121925, #0f141e);
+    border-color: #252e3d;
+    border-radius: 17px;
+}
+[data-testid="stExpander"] {
+    background: #111722;
+    border: 1px solid #252e3d;
+    border-radius: 14px;
+}
+[data-testid="stExpander"] summary p {color: #e8edf7 !important;}
+[data-testid="stDataFrame"] {border: 1px solid #252e3d; border-radius: 12px; overflow: hidden;}
+[data-testid="stMetric"] {
+    background: linear-gradient(145deg, #141b28, #10151f);
+    border: 1px solid #283244;
+    border-radius: 15px;
+    padding: 1rem 1.2rem;
+}
+[data-testid="stMetricLabel"] p {color: #91a0b5 !important;}
+[data-testid="stMetricValue"] {color: #f1f4fb;}
+[data-testid="stForm"] {border: 0; background: transparent;}
+[data-testid="stAlert"] {border-radius: 12px;}
+hr {border-color: #252e3d; margin: 1.5rem 0;}
+.hero {
+    color: #f2f5fc;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    letter-spacing: -.045em;
+}
+.hero span {background: linear-gradient(transparent 65%, rgba(167,139,250,.34) 65%);}
+.sub {color: #91a0b5;}
+.stat {
+    background: linear-gradient(145deg, #151c29, #10151f);
+    border: 1px solid #283244;
+    box-shadow: 0 12px 30px rgba(0,0,0,.12);
+}
+.stat.hot {
+    background: radial-gradient(circle at 100% 0, rgba(167,139,250,.22), transparent 55%),
+                linear-gradient(145deg, #211c35, #151724);
+    border-color: #55427d;
+    box-shadow: 0 12px 30px rgba(89,57,150,.16);
+}
+.stat-icon {background: rgba(167,139,250,.15); color: #c4b5fd;}
+.stat.hot .stat-icon {background: rgba(167,139,250,.22);}
+.stat-label, .stat-note {color: #91a0b5;}
+.stat.hot .stat-label, .stat.hot .stat-note {color: #c9bdf1;}
+.stat-value {color: #f2f5fc;}
+.user-chip {background: #151c28; border: 1px solid #252e3d;}
+.user-chip b {color: #edf2fb;}
+.user-chip small {color: #91a0b5;}
+.avatar {background: linear-gradient(145deg, #8b5cf6, #4f46e5);}
+.scene {
+    border: 1px solid #2b2640;
+    background: radial-gradient(circle at 35% 20%, #28203f 0%, #171725 48%, #10151f 100%);
+}
+.scene .ring {border-color: rgba(167,139,250,.24);}
+.scene .r2 {border-color: rgba(167,139,250,.12);}
+.chip {
+    background: #1b2230;
+    color: #e8edf7;
+    border: 1px solid #30394a;
+    box-shadow: 0 12px 28px rgba(0,0,0,.3);
+}
+.card-main {
+    background: linear-gradient(145deg, #1b2230, #141a25);
+    border: 1px solid #354054;
+    box-shadow: 0 24px 55px rgba(0,0,0,.42);
+}
+.card-main .who b {color: #f2f5fc;}
+.card-main .who small, .row {color: #a3afc2;}
+.card-main .pic {background: linear-gradient(135deg,#a78bfa,#6366f1);}
+.bar {background: #2a3343;}
+.bar i {background: linear-gradient(90deg,#8b5cf6,#67e8f9);}
+.grade {background: rgba(103,232,249,.15); color: #a5f3fc;}
+.scene-cap h3 {color: #f2f5fc;}
+.scene-cap p {color: #a3afc2;}
+.st-key-auth_form {
+    background: #111722;
+    border: 1px solid #252e3d;
+    box-shadow: 0 25px 70px rgba(0,0,0,.32);
+}
+.auth-title {color: #f2f5fc;}
+.auth-sub {color: #91a0b5;}
+@media (max-width: 900px) {
+    .block-container {padding: 1.1rem;}
+    .st-key-auth_form {border-radius: 20px; padding: 1.5rem;}
+    .scene {display: none;}
+}
+</style>
+"""
+st.markdown(DARK_THEME, unsafe_allow_html=True)
 
 SCENE_HTML = """
 <div class="scene">
@@ -660,21 +836,39 @@ def dashboard():
                     x=alt.X("marks:Q", title="Average marks"),
                     y=alt.Y("course:N", sort="-x", title=None),
                     tooltip=["course", alt.Tooltip("marks:Q", format=".1f")])
-                st.altair_chart(chart, use_container_width=True)
+                st.altair_chart(
+                    chart.configure(background="#111722")
+                    .configure_axis(labelColor="#a5afc0", titleColor="#a5afc0", gridColor="#293244")
+                    .configure_legend(labelColor="#b7c1d1", titleColor="#b7c1d1")
+                    .configure_view(strokeOpacity=0),
+                    use_container_width=True,
+                )
             with right:
                 st.markdown("#### Grade distribution")
                 counts = df.groupby("grade").size().reset_index(name="students")
                 chart = alt.Chart(counts).mark_bar(color="#60a5fa", cornerRadiusTopLeft=6, cornerRadiusTopRight=6).encode(
                     x=alt.X("grade:N", sort=["A+", "A", "B", "C"], title="Grade"),
                     y=alt.Y("students:Q", title="Students"), tooltip=["grade", "students"])
-                st.altair_chart(chart, use_container_width=True)
+                st.altair_chart(
+                    chart.configure(background="#111722")
+                    .configure_axis(labelColor="#a5afc0", titleColor="#a5afc0", gridColor="#293244")
+                    .configure_legend(labelColor="#b7c1d1", titleColor="#b7c1d1")
+                    .configure_view(strokeOpacity=0),
+                    use_container_width=True,
+                )
             st.markdown("#### Age vs marks")
             scatter = alt.Chart(df).mark_circle(size=130, opacity=.85).encode(
                 x=alt.X("age:Q", title="Age", scale=alt.Scale(zero=False)),
                 y=alt.Y("marks:Q", title="Marks"),
                 color=alt.Color("course:N", scale=alt.Scale(scheme="blues"), legend=alt.Legend(title="Course")),
                 tooltip=["id", "name", "course", "age", "marks", "grade"]).interactive()
-            st.altair_chart(scatter, use_container_width=True)
+            st.altair_chart(
+                scatter.configure(background="#111722")
+                .configure_axis(labelColor="#a5afc0", titleColor="#a5afc0", gridColor="#293244")
+                .configure_legend(labelColor="#b7c1d1", titleColor="#b7c1d1")
+                .configure_view(strokeOpacity=0),
+                use_container_width=True,
+            )
 
     # ───────────────────────── ACTIVITY ─────────────────────────
     with tab_activity:
