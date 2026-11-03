@@ -2,7 +2,7 @@ streamlit
 pandas
 requests
 altair
-
+streamlit>=1.39
 fastapi
 uvicorn
 sqlalchemy
