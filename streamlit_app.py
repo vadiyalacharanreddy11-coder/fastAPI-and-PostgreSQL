@@ -29,7 +29,7 @@ import streamlit as st
 # ─────────────────────────────────────────────────────────────────────────────
 st.set_page_config(page_title="Student Registry", page_icon="🎓", layout="wide")
 
-API_DEFAULT = "http://127.0.0.1:8000"
+API_DEFAULT = "https://student-management-api-tr9q.onrender.com"
  
 PAGE_SIZE = 10
 
@@ -372,7 +372,11 @@ label p {color: #d3d9e5 !important;}
     border-bottom: 1px solid #252e3d;
 }
 .stTabs [data-baseweb="tab"] {color: #91a0b5; font-weight: 700;}
-.stTabs [aria-selected="true"] {color: #c4b5fd !important;}
+.stTabs [aria-selected="true"] {
+    color: #c4b5fd !important;
+    background: #202538 !important;
+    box-shadow: none !important;
+}
 .stTabs [data-baseweb="tab-highlight"] {background: #a78bfa;}
 .stTabs [data-baseweb="tab-border"] {background: transparent;}
 .stTabs [data-baseweb="tab-panel"] {padding-top: 1.4rem;}
