@@ -30,9 +30,9 @@ import streamlit as st
 st.set_page_config(page_title="Student Registry", page_icon="🎓", layout="wide")
 
 API_DEFAULT = "https://student-management-api-tr9q.onrender.com"
-<<<<<<< HEAD
+ 
 PAGE_SIZE = 10
-=======
+
 TIMEOUT = 60  # Render free tier can take ~30s to wake up
 
 st.session_state.setdefault("api_base", API_DEFAULT)
@@ -43,7 +43,7 @@ st.session_state.setdefault("token", None)
 st.session_state.setdefault("user_email", None)
 st.session_state.setdefault("user_name", None)
 st.session_state.setdefault("flash", None)
->>>>>>> 3a7445f (ch)
+ 
 
 
 # ─────────────────────────────────────────────────────────────────────────────
